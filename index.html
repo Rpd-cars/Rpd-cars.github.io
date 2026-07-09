@@ -329,17 +329,18 @@
       }
 
       function loginUser() {
-        const userId = document.getElementById("login-select").value;
-        currentUser = drivers.find((d) => d.id === userId);
-        if (!currentUser) return;
-
-        const activeCar = cars.find((c) => c.currentDriver === currentUser.id);
-        if (activeCar) {
-          setupActiveDriveScreen(activeCar);
-        } else {
-          updateDashboardUI();
-          showScreen("screen-dashboard");
-        }
+        const driverNameInput = document.getElementById("driverName");
+if (driverNameInput) {
+    const driverName = driverNameInput.value.trim();
+    if (driverName === "") {
+        alert("Please enter a driver name.");
+        return;
+    }
+    localStorage.setItem("currentDriver", driverName);
+    window.location.href = "dashboard.html";
+} else {
+    console.error("Driver name input field not found.");
+}
       }
 
       function logoutUser() {
