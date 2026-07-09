@@ -165,8 +165,16 @@
         { id: "c3", name: "Sequoia", status: "Available", currentDriver: null, sessionStart: null }
       ];
 
-      let drivers = JSON.parse(localStorage.getItem("camp_drivers")) || DEFAULT_DRIVERS;
-      let cars = JSON.parse(localStorage.getItem("camp_cars")) || DEFAULT_CARS;
+      let drivers = [];
+let cars = [];
+
+get(ref(db, 'camp_drivers')).then((snapshot) => {
+  if (snapshot.exists()) drivers = snapshot.val();
+});
+get(ref(db, 'camp_cars')).then((snapshot) => {
+  if (snapshot.exists()) cars = snapshot.val();
+});
+
       let currentUser = null;
       let countdownInterval = null;
       const MAX_SESSION_MINUTES = 75;
@@ -178,9 +186,10 @@
       });
 
       function saveState() {
-        localStorage.setItem("camp_drivers", JSON.stringify(drivers));
-        localStorage.setItem("camp_cars", JSON.stringify(cars));
-      }
+    set(ref(db, 'camp_drivers'), drivers);
+    set(ref(db, 'camp_cars'), cars);
+}
+
 
       function populateLoginDropdown() {
         const select = document.getElementById("login-select");
