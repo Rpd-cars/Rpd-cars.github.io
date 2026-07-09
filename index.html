@@ -331,32 +331,86 @@
                 </div>
             `
           )
+      function populateLoginDropdown() {
+        const select = document.getElementById("login-select");
+        if (!select) return;
+        
+        // Add a default placeholder prompt option
+        let optionsHTML = `<option value="">-- Choose an existing driver --</option>`;
+        
+        optionsHTML += drivers
+          .map(
+            (d) =>
+              `<option value="${d.id}">${d.name} (${formatMinutes(d.weeklyMinutesLeft)} Left)</option>`
+          )
           .join("");
+          
+        select.innerHTML = optionsHTML;
       }
 
-      function resetDriverHours(driverId) {
-        const target = drivers.find((d) => d.id === driverId);
-        if (target) {
-          target.weeklyMinutesLeft = 480; // Full reset to 8 hours
+      function resetDriverHours() {
+        if (confirm("Are you sure you want to reset all drivers to 8 hours?")) {
+          drivers.forEach(d => d.weeklyMinutesLeft = 480);
           saveState();
-          renderAdminPanel();
+          updateDashboardUI();
+          if (currentUser) {
+            currentUser = drivers.find(d => d.id === currentUser.id) || null;
+          }
+          alert("All driver hours have been reset to 8 hours.");
         }
       }
 
-      function loginUser() {
-        const driverNameInput = document.getElementById("driverName");
-if (driverNameInput) {
-    const driverName = driverNameInput.value.trim();
-    if (driverName === "") {
-        alert("Please enter a driver name.");
-        return;
-    }
-    localStorage.setItem("currentDriver", driverName);
-    window.location.href = "dashboard.html";
-} else {
-    console.error("Driver name input field not found.");
-}
+      function updateDashboardUI() {
+        if (!currentUser) return;
+        document.getElementById("currentDriverName").innerText = currentUser.name;
+        document.getElementById("driverTimeLeft").innerText = formatMinutes(currentUser.weeklyMinutesLeft);
+        populateHistoryTable();
       }
+
+      function loginUser() {
+        const selectElement = document.getElementById("login-select");
+        const driverNameInput = document.getElementById("driverName");
+        
+        let selectedDriverId = selectElement ? selectElement.value : "";
+        let typedName = driverNameInput ? driverNameInput.value.trim() : "";
+        let targetDriver = null;
+
+        // 1. Check if they picked an existing profile from the dropdown
+        if (selectedDriverId !== "") {
+          targetDriver = drivers.find((d) => d.id === selectedDriverId);
+        } 
+        // 2. Otherwise, check if they typed a name to create/use a profile
+        else if (typedName !== "") {
+          // Check if the typed name already exists anyway to prevent duplicates
+          targetDriver = drivers.find(
+            (d) => d.name.toLowerCase() === typedName.toLowerCase()
+          );
+
+          // If it really is a completely new name, create the profile
+          if (!targetDriver) {
+            const newId = (drivers.length + 1).toString();
+            targetDriver = { id: newId, name: typedName, weeklyMinutesLeft: 480 }; // Default 8 hrs
+            drivers.push(targetDriver);
+            saveState();
+          }
+        } 
+        // 3. If they didn't do either, show an alert
+        else {
+          alert("Please select an existing account or type your name to create one.");
+          return;
+        }
+
+        // Clear the registration text input box for next time
+        if (driverNameInput) driverNameInput.value = "";
+
+        // Log the driver in globally and proceed to the dashboard
+        currentUser = targetDriver;
+        localStorage.setItem("currentDriver", JSON.stringify(currentUser));
+
+        updateDashboardUI();
+        showScreen("screen-dashboard");
+      }
+
 
       function logoutUser() {
         if (countdownInterval) clearInterval(countdownInterval);
