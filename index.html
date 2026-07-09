@@ -1,30 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.1.0",
-    "react-dom": "https://esm.sh/react-dom@19.1.0",
-    "react-dom/": "https://esm.sh/react-dom@19.1.0/"
-  }
-}
-</script>
-
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.1.0",
+        "react-dom": "https://esm.sh/react-dom@19.1.0",
+        "react-dom/": "https://esm.sh/react-dom@19.1.0/"
+      }
+    }
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camp Car Tracker + Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body
-    class="bg-gray-50 font-sans text-gray-900 antialiased min-h-screen flex flex-col"
-  >
-    <header
-      class="bg-slate-900 text-white shadow-md border-b border-slate-800 py-4 px-6 flex justify-between items-center"
-    >
+  <body class="bg-gray-50 font-sans text-gray-900 antialiased min-h-screen flex flex-col">
+    
+    <header class="bg-slate-900 text-white shadow-md border-b border-slate-800 py-4 px-6 flex justify-between items-center">
       <h1 class="text-xl font-bold tracking-tight">
-        CAMP CAR
-        <span class="text-emerald-400">TRACKER</span>
+        CAMP CAR <span class="text-emerald-400">TRACKER</span>
       </h1>
       <div class="flex items-center gap-2">
         <button
@@ -34,10 +29,7 @@
         >
           🛠️ Admin Access
         </button>
-        <div
-          id="user-header-info"
-          class="hidden text-sm font-medium flex items-center gap-4"
-        >
+        <div id="user-header-info" class="hidden text-sm font-medium flex items-center gap-4">
           <button
             onclick="logoutUser()"
             class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded border border-slate-700 transition text-xs"
@@ -48,17 +40,9 @@
       </div>
     </header>
 
-    <main
-      class="flex-grow p-4 max-w-md mx-auto w-full transition-all duration-300"
-    >
-      <section
-        id="screen-login"
-        class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mt-8"
-      >
-              <section
-        id="screen-login"
-        class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mt-8"
-      >
+    <main class="flex-grow p-4 max-w-md mx-auto w-full transition-all duration-300">
+      
+      <section id="screen-login" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mt-8">
         <h2 class="text-lg font-bold text-slate-800 mb-2 text-center">
           Driver Authentication
         </h2>
@@ -69,7 +53,7 @@
           <div>
             <label class="block text-xs font-semibold text-slate-800 mb-1">Select Existing Account</label>
             <select id="login-select" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:border-slate-500 text-sm">
-              </select>
+            </select>
           </div>
 
           <div class="relative flex py-2 items-center">
@@ -92,84 +76,44 @@
         </div>
       </section>
 
-
       <section id="screen-dashboard" class="hidden space-y-6 mt-4">
         <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
           <div class="flex justify-between items-start mb-3">
             <div>
-              <p
-                class="text-xs font-bold text-gray-400 uppercase tracking-wide"
-              >
-                Driver Balance
-              </p>
-              <h3
-                id="dash-username"
-                class="text-xl font-bold text-slate-800"
-              ></h3>
+              <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Driver Balance</p>
+              <h3 id="dash-username" class="text-xl font-bold text-slate-800"></h3>
             </div>
             <div class="text-right">
-              <p
-                class="text-xs font-bold text-gray-400 uppercase tracking-wide"
-              >
-                Weekly Remaining
-              </p>
-              <p
-                id="dash-time-left"
-                class="text-lg font-black text-slate-900"
-              ></p>
+              <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Weekly Remaining</p>
+              <p id="dash-time-left" class="text-lg font-black text-slate-900"></p>
             </div>
           </div>
           <div class="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
-            <div
-              id="dash-progress-bar"
-              class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500"
-              style="width: 0%"
-            ></div>
+            <div id="dash-progress-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
           </div>
         </div>
 
         <div>
-          <h3
-            class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3 px-1"
-          >
-            Available Fleet
-          </h3>
+          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3 px-1">Available Fleet</h3>
           <div id="fleet-container" class="space-y-3"></div>
         </div>
       </section>
 
       <section id="screen-active-drive" class="hidden space-y-6 mt-4">
-        <div
-          class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 text-center space-y-6"
-        >
+        <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 text-center space-y-6">
           <div>
-            <span
-              class="inline-block px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase rounded-full tracking-wider animate-pulse"
-            >
+            <span class="inline-block px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase rounded-full tracking-wider animate-pulse">
               Drive Session Active
             </span>
           </div>
-
           <div>
-            <h3
-              id="active-car-name"
-              class="text-2xl font-black text-slate-800 tracking-tight"
-            ></h3>
-            <p class="text-gray-400 text-xs mt-1">
-              Maximum allowed session: 1 hour, 15 minutes
-            </p>
+            <h3 id="active-car-name" class="text-2xl font-black text-slate-800 tracking-tight"></h3>
+            <p class="text-gray-400 text-xs mt-1">Maximum allowed session: 1 hour, 15 minutes</p>
           </div>
-
           <div class="py-4">
-            <div
-              id="session-countdown"
-              class="text-5xl font-mono font-black text-slate-900 tracking-tight"
-            >
-              01:15:00
-            </div>
+            <div id="session-countdown" class="text-5xl font-mono font-black text-slate-900 tracking-tight">01:15:00</div>
             <p class="text-gray-400 text-xs mt-2">Remaining Session Time</p>
           </div>
-
           <button
             onclick="endActiveDrive()"
             class="w-full bg-rose-600 hover:bg-rose-700 text-white p-4 rounded-xl font-bold tracking-wide transition shadow-sm uppercase text-sm"
@@ -180,39 +124,35 @@
       </section>
 
       <section id="screen-admin" class="hidden space-y-6 mt-4">
-        <div
-          class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex justify-between items-center"
-        >
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex justify-between items-center">
           <div>
-            <h2 class="text-base font-bold text-amber-900">
-              🛠️ Camp Admin Controls
-            </h2>
-            <p class="text-xs text-amber-700">
-              Manage time credits and clear abuse status.
-            </p>
+            <h2 class="text-base font-bold text-amber-900">🛠️ Camp Admin Controls</h2>
+            <p class="text-xs text-amber-700">Manage profiles and time allocations.</p>
           </div>
-          <button
-            onclick="exitAdminMode()"
-            class="bg-white hover:bg-gray-100 text-slate-700 border border-gray-300 font-bold text-xs px-3 py-1.5 rounded transition"
-          >
-            Exit Admin
-          </button>
+          <div class="flex gap-2">
+            <button
+              onclick="resetDriverHours()"
+              class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-3 py-1.5 rounded transition shadow-sm"
+            >
+              Reset All (8h)
+            </button>
+            <button
+              onclick="exitAdminMode()"
+              class="bg-white hover:bg-gray-100 text-slate-700 border border-gray-300 font-bold text-xs px-3 py-1.5 rounded transition"
+            >
+              Exit Admin
+            </button>
+          </div>
         </div>
 
         <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-          <h3
-            class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4"
-          >
-            Driver Weekly Refills
-          </h3>
+          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4">Driver List Management</h3>
           <div id="admin-drivers-list" class="space-y-3"></div>
         </div>
       </section>
     </main>
 
     <script>
-      const ADMIN_CODE = "admin123"; // 🛠️ CHANGE YOUR ADMIN PASSWORD HERE
-
       const DEFAULT_DRIVERS = [
         { id: "1", name: "Driver A", weeklyMinutesLeft: 480 },
         { id: "2", name: "Driver B", weeklyMinutesLeft: 120 },
@@ -220,36 +160,15 @@
       ];
 
       const DEFAULT_CARS = [
-        {
-          id: "c1",
-          name: "Camp Van #1 (Silver)",
-          status: "Available",
-          currentDriver: null,
-          sessionStart: null
-        },
-        {
-          id: "c2",
-          name: "Camp Sedan #2 (Black)",
-          status: "Available",
-          currentDriver: null,
-          sessionStart: null
-        },
-        {
-          id: "c3",
-          name: "Camp SUV #3 (White)",
-          status: "Available",
-          currentDriver: null,
-          sessionStart: null
-        }
+        { id: "c1", name: "Camp Van #1 (Silver)", status: "Available", currentDriver: null, sessionStart: null },
+        { id: "c2", name: "Camp Sedan #2 (Black)", status: "Available", currentDriver: null, sessionStart: null },
+        { id: "c3", name: "Camp SUV #3 (White)", status: "Available", currentDriver: null, sessionStart: null }
       ];
 
-      let drivers =
-        JSON.parse(localStorage.getItem("camp_drivers")) || DEFAULT_DRIVERS;
+      let drivers = JSON.parse(localStorage.getItem("camp_drivers")) || DEFAULT_DRIVERS;
       let cars = JSON.parse(localStorage.getItem("camp_cars")) || DEFAULT_CARS;
       let currentUser = null;
       let countdownInterval = null;
-      let isAdminMode = false;
-
       const MAX_SESSION_MINUTES = 75;
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -265,12 +184,14 @@
 
       function populateLoginDropdown() {
         const select = document.getElementById("login-select");
-        select.innerHTML = drivers
-          .map(
-            (d) =>
-              `<option value="${d.id}">${d.name} (${formatMinutes(d.weeklyMinutesLeft)} Left)</option>`
-          )
+        if (!select) return;
+        
+        let optionsHTML = `<option value="">-- Choose an existing driver --</option>`;
+        optionsHTML += drivers
+          .map(d => `<option value="${d.id}">${d.name} (${formatMinutes(d.weeklyMinutesLeft)} Left)</option>`)
           .join("");
+          
+        select.innerHTML = optionsHTML;
       }
 
       function showScreen(screenId) {
@@ -282,14 +203,256 @@
 
         document.getElementById(screenId).classList.remove("hidden");
         if (screenId !== "screen-login" && screenId !== "screen-admin") {
-          document
-            .getElementById("user-header-info")
-            .classList.remove("hidden");
+          document.getElementById("user-header-info").classList.remove("hidden");
         }
       }
 
-            function promptAdminAccess() {
-  const password = prompt("Enter Admin Password:");
+      function promptAdminAccess() {
+        const password = prompt("Enter Admin Password:");
+        if (password === 'Levcars124716') {
+          showScreen("screen-admin");
+          renderAdminPanel();
+        } else if (password !== null) {
+          alert("Incorrect password.");
+        }
+      }
+
+      function renderAdminPanel() {
+        const listDiv = document.getElementById("admin-drivers-list");
+        if (!listDiv) return;
+        
+        if (drivers.length === 0) {
+          listDiv.innerHTML = "<p class='text-sm text-gray-500 text-center py-2'>No drivers registered yet.</p>";
+          return;
+        }
+        
+        listDiv.innerHTML = drivers.map(d => `
+          <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <div>
+              <p class="text-sm font-bold text-slate-800">${d.name}</p>
+              <p class="text-xs text-gray-500">${formatMinutes(d.weeklyMinutesLeft)} remaining</p>
+            </div>
+            <button onclick="deleteDriver('${d.id}')" class="bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm">
+              Delete
+            </button>
+          </div>
+        `).join("");
+      }
+
+      function deleteDriver(driverId) {
+        if (confirm("Are you sure you want to delete this driver profile?")) {
+          drivers = drivers.filter(d => d.id !== driverId);
+          saveState();
+          populateLoginDropdown();
+          renderAdminPanel();
+        }
+      }
+
+      function exitAdminMode() {
+        if (currentUser) {
+          showScreen("screen-dashboard");
+        } else {
+          showScreen("screen-login");
+        }
+      }
+
+      function resetDriverHours() {
+        if (confirm("Are you sure you want to reset all drivers to 8 hours?")) {
+          drivers.forEach(d => d.weeklyMinutesLeft = 480);
+          saveState();
+          if (currentUser) {
+            currentUser = drivers.find(d => d.id === currentUser.id) || null;
+            updateDashboardUI();
+          }
+          renderAdminPanel();
+          alert("All driver hours have been reset to 8 hours.");
+        }
+      }
+
+      function loginUser() {
+        const selectElement = document.getElementById("login-select");
+        const driverNameInput = document.getElementById("driverName");
+        
+        let selectedDriverId = selectElement ? selectElement.value : "";
+        let typedName = driverNameInput ? driverNameInput.value.trim() : "";
+        let targetDriver = null;
+
+        if (selectedDriverId !== "") {
+          targetDriver = drivers.find((d) => d.id === selectedDriverId);
+        } 
+        else if (typedName !== "") {
+          targetDriver = drivers.find(
+            (d) => d.name.toLowerCase() === typedName.toLowerCase()
+          );
+
+          if (!targetDriver) {
+            const newId = Date.now().toString();
+            targetDriver = { id: newId, name: typedName, weeklyMinutesLeft: 480 };
+            drivers.push(targetDriver);
+            saveState();
+          }
+        } 
+        else {
+          alert("Please select an existing account or type your name to create one.");
+          return;
+        }
+
+        if (driverNameInput) driverNameInput.value = "";
+
+        currentUser = targetDriver;
+        localStorage.setItem("currentDriver", JSON.stringify(currentUser));
+
+        updateDashboardUI();
+        showScreen("screen-dashboard");
+      }
+
+      function logoutUser() {
+        if (countdownInterval) clearInterval(countdownInterval);
+        currentUser = null;
+        populateLoginDropdown();
+        showScreen("screen-login");
+      }
+
+      function updateDashboardUI() {
+        if (!currentUser) return;
+        document.getElementById("dash-username").innerText = currentUser.name;
+        document.getElementById("dash-time-left").innerText = formatMinutes(currentUser.weeklyMinutesLeft);
+
+        const percentage = (currentUser.weeklyMinutesLeft / 480) * 100;
+        const bar = document.getElementById("dash-progress-bar");
+        bar.style.width = `${Math.max(0, Math.min(percentage, 100))}%`;
+
+        if (currentUser.weeklyMinutesLeft <= 0) {
+          bar.className = "bg-rose-500 h-2.5 rounded-full transition-all duration-500";
+        } else if (currentUser.weeklyMinutesLeft < 120) {
+          bar.className = "bg-amber-500 h-2.5 rounded-full transition-all duration-500";
+        } else {
+          bar.className = "bg-emerald-500 h-2.5 rounded-full transition-all duration-500";
+        }
+
+        renderFleet();
+      }
+
+      function renderFleet() {
+        const container = document.getElementById("fleet-container");
+        if (!container) return;
+        
+        container.innerHTML = cars
+          .map((car) => {
+            const isAvailable = car.status === "Available";
+            const hasHoursLeft = currentUser && currentUser.weeklyMinutesLeft > 0;
+
+            let buttonHTML = "";
+            if (isAvailable) {
+              if (hasHoursLeft) {
+                buttonHTML = `<button onclick="startDrive('${car.id}')" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs px-4 py-2 rounded-lg transition shadow-sm">Check Out</button>`;
+              } else {
+                buttonHTML = `<button disabled class="bg-gray-200 text-gray-400 font-semibold text-xs px-4 py-2 rounded-lg cursor-not-allowed">Locked (0h Left)</button>`;
+              }
+            } else {
+              const driver = drivers.find((d) => d.id === car.currentDriver);
+              buttonHTML = `<span class="text-xs font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded border border-rose-100">In Use by ${driver ? driver.name : "Unknown"}</span>`;
+            }
+
+            return `
+              <div class="bg-white border border-gray-200 p-4 rounded-xl flex justify-between items-center shadow-sm">
+                  <div class="flex items-center gap-3">
+                      <span class="text-xl">${isAvailable ? "🚗" : "🛑"}</span>
+                      <div>
+                          <h4 class="font-bold text-sm text-slate-800">${car.name}</h4>
+                          <p class="text-xs font-semibold ${isAvailable ? "text-emerald-600" : "text-gray-400"}">${car.status}</p>
+                      </div>
+                  </div>
+                  <div>${buttonHTML}</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function startDrive(carId) {
+        if (!currentUser || currentUser.weeklyMinutesLeft <= 0) return;
+
+        const car = cars.find((c) => c.id === carId);
+        if (!car || car.status !== "Available") return;
+
+        car.status = "In Use";
+        car.currentDriver = currentUser.id;
+        car.sessionStart = Date.now();
+
+        saveState();
+        setupActiveDriveScreen(car);
+      }
+
+      function setupActiveDriveScreen(car) {
+        document.getElementById("active-car-name").innerText = car.name;
+        showScreen("screen-active-drive");
+
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        function updateTimer() {
+          const elapsedMs = Date.now() - car.sessionStart;
+          const elapsedSeconds = Math.floor(elapsedMs / 1000);
+          const allowedSeconds = MAX_SESSION_MINUTES * 60;
+          let remainingSeconds = allowedSeconds - elapsedSeconds;
+
+          const timerElement = document.getElementById("session-countdown");
+
+          if (remainingSeconds <= 0) {
+            remainingSeconds = Math.abs(remainingSeconds);
+            timerElement.className = "text-5xl font-mono font-black text-rose-600 tracking-tight animate-pulse";
+            timerElement.innerText = `+${formatTimeStrings(remainingSeconds)}`;
+          } else {
+            if (remainingSeconds < 900) {
+              timerElement.className = "text-5xl font-mono font-black text-amber-500 tracking-tight";
+            } else {
+              timerElement.className = "text-5xl font-mono font-black text-slate-900 tracking-tight";
+            }
+            timerElement.innerText = formatTimeStrings(remainingSeconds);
+          }
+        }
+
+        updateTimer();
+        countdownInterval = setInterval(updateTimer, 1000);
+      }
+
+      function endActiveDrive() {
+        const car = cars.find((c) => c.currentDriver === currentUser.id);
+        if (!car) return;
+
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        const elapsedMs = Date.now() - car.sessionStart;
+        const elapsedMinutes = Math.ceil(elapsedMs / 1000 / 60);
+
+        currentUser.weeklyMinutesLeft -= elapsedMinutes;
+        if (currentUser.weeklyMinutesLeft < 0) currentUser.weeklyMinutesLeft = 0;
+
+        car.status = "Available";
+        car.currentDriver = null;
+        car.sessionStart = null;
+
+        saveState();
+        updateDashboardUI();
+        showScreen("screen-dashboard");
+      }
+
+      function formatMinutes(totalMinutes) {
+        const hours = Math.floor(totalMinutes / 60);
+        const mins = totalMinutes % 60;
+        return `${hours}h ${mins}m`;
+      }
+
+      function formatTimeStrings(totalSeconds) {
+        const hrs = Math.floor(totalSeconds / 3600);
+        const mins = Math.floor((totalSeconds % 3600) / 60);
+        const secs = totalSeconds % 60;
+        return [hrs, mins, secs].map(v => v < 10 ? "0" + v : v).join(":");
+      }
+    </script>
+  </body>
+</html>
+rd:");
   if (password === 'Levcars124716') {
     const adminPanel = document.getElementById("admin-panel");
     if (adminPanel) {
