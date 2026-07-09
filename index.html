@@ -288,52 +288,40 @@
         }
       }
 
-      function promptAdminAccess() {
-        if (isAdminMode) {
-          exitAdminMode();
-          return;
-        }
-
-        const access = prompt("Enter Camp Admin Code:");
-        if (access === ADMIN_CODE) {
-          isAdminMode = true;
-          document.getElementById("admin-nav-btn").innerText = "🚪 Leave Admin";
+            function promptAdminAccess() {
+        const password = prompt("Enter Admin Password:");
+        if (password === "Levcars124716") { // Or whatever your password is set to
+          isAdmin = true;
+          alert("Admin access granted.");
+          
+          // Fixed: Changed from 'admin-nav-button' to match your HTML ID 'admin-nav-btn'
+          const adminBtn = document.getElementById("admin-nav-btn");
+          if (adminBtn) adminBtn.style.display = "inline-block";
+          
           renderAdminPanel();
           showScreen("screen-admin");
-        } else if (access !== null) {
-          alert("Incorrect Admin Password.");
-        }
-      }
-
-      function exitAdminMode() {
-        isAdminMode = false;
-        document.getElementById("admin-nav-btn").innerText = "🛠️ Admin Access";
-        if (currentUser) {
-          updateDashboardUI();
-          showScreen("screen-dashboard");
         } else {
-          populateLoginDropdown();
-          showScreen("screen-login");
+          alert("Incorrect password.");
         }
       }
 
       function renderAdminPanel() {
-        const list = document.getElementById("admin-drivers-list");
-        list.innerHTML = drivers
-          .map(
-            (d) => `
-                <div class="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0 last:pb-0">
-                    <div>
-                        <p class="font-bold text-sm text-slate-800">${d.name}</p>
-                        <p class="text-xs text-gray-500">Available Credit: ${formatMinutes(d.weeklyMinutesLeft)}</p>
-                    </div>
-                    <button onclick="resetDriverHours('${d.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded shadow-sm transition">Refill 8 hrs</button>
-                </div>
-            `
-          )
-      function populateLoginDropdown() {
-        const select = document.getElementById("login-select");
-        if (!select) return;
+        const listDiv = document.getElementById("admin-drivers-list");
+        if (!listDiv) return;
+        
+        if (drivers.length === 0) {
+          listDiv.innerHTML = "<p>No drivers registered yet.</p>";
+          return;
+        }
+        
+        listDiv.innerHTML = drivers.map(d => `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            <span><strong>${d.name}</strong> (${formatMinutes(d.weeklyMinutesLeft)} left)</span>
+            <button onclick="deleteDriver('${d.id}')" style="background-color: #ff4d4d; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Delete</button>
+          </div>
+        `).join("");
+      }
+
         
         // Add a default placeholder prompt option
         let optionsHTML = `<option value="">-- Choose an existing driver --</option>`;
