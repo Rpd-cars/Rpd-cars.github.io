@@ -165,45 +165,54 @@
         { id: "c3", name: "Sequoia", status: "Available", currentDriver: null, sessionStart: null }
       ];
 
-      let drivers = [];
-      let cars = [];
+      // Instantly load defaults so UI never locks up
+      let drivers = DEFAULT_DRIVERS;
+      let cars = DEFAULT_CARS;
       let currentUser = null;
       let countdownInterval = null;
       const MAX_SESSION_MINUTES = 75;
 
-      // This triggers once Firebase is globally set up below
+      window.addEventListener("DOMContentLoaded", () => {
+        populateLoginDropdown();
+        renderFleet();
+      });
+
+      // Firebase methods will assign themselves here safely when loaded
+      window.db = null;
+      window.ref = null;
+      window.set = null;
+      window.get = null;
+
       function initAppWithFirebase() {
-        get(ref(db, 'camp_drivers')).then((snapshot) => {
+        if (!window.get || !window.ref || !window.db) return;
+        
+        window.get(window.ref(window.db, 'camp_drivers')).then((snapshot) => {
           if (snapshot.exists()) {
             drivers = snapshot.val();
           } else {
-            drivers = DEFAULT_DRIVERS;
             saveState();
           }
           
-          get(ref(db, 'camp_cars')).then((snapshot) => {
+          window.get(window.ref(window.db, 'camp_cars')).then((snapshot) => {
             if (snapshot.exists()) {
               cars = snapshot.val();
             } else {
-              cars = DEFAULT_CARS;
               saveState();
             }
             populateLoginDropdown();
             renderFleet();
           });
         }).catch((err) => {
-          console.error("Firebase load error, falling back to local defaults:", err);
-          drivers = DEFAULT_DRIVERS;
-          cars = DEFAULT_CARS;
-          populateLoginDropdown();
-          renderFleet();
+          console.error("Database connection issue, using local tracking:", err);
         });
       }
 
       function saveState() {
-        if (typeof set === 'function' && typeof ref === 'function' && typeof db !== 'undefined') {
-          set(ref(db, 'camp_drivers'), drivers);
-          set(ref(db, 'camp_cars'), cars);
+        populateLoginDropdown();
+        renderFleet();
+        if (window.set && window.ref && window.db) {
+          window.set(window.ref(window.db, 'camp_drivers'), drivers);
+          window.set(window.ref(window.db, 'camp_cars'), cars);
         }
       }
 
@@ -268,7 +277,6 @@
         if (confirm("Are you sure you want to delete this driver profile?")) {
           drivers = drivers.filter(d => d.id !== driverId);
           saveState();
-          populateLoginDropdown();
           renderAdminPanel();
         }
       }
@@ -485,11 +493,4 @@
         authDomain: "rpd-cars.firebaseapp.com",
         databaseURL: "https://rpd-cars-default-rtdb.firebaseio.com/",
         projectId: "rpd-cars",
-        storageBucket: "rpd-cars.firebasestorage.app",
-        messagingSenderId: "1085664945905",
-        appId: "1:1085664945905:web:ad7401ab7b56569e156b50",
-        measurementId: "G-GSX209QMKZ"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase
+        storageBucket: "rpd-cars.firebasestorage
