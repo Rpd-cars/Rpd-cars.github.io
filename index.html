@@ -170,10 +170,18 @@ let cars = [];
 
 get(ref(db, 'camp_drivers')).then((snapshot) => {
   if (snapshot.exists()) drivers = snapshot.val();
+  get(ref(db, 'camp_cars')).then((snapshot) => {
+    if (snapshot.exists()) cars = snapshot.val();
+    populateLoginDropdown();
+    renderFleet();
+  });
 });
-get(ref(db, 'camp_cars')).then((snapshot) => {
-  if (snapshot.exists()) cars = snapshot.val();
+
+
+    renderFleet();
+  });
 });
+
 
       let currentUser = null;
       let countdownInterval = null;
